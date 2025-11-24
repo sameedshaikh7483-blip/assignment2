@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+
+        .output-container {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #4CAF50;
+            background-color: #f9fff9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Student Registration</h1>
+    <form id="registrationForm">
+
+        <!-- FULL NAME -->
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName">
+            <span class="error-message" id="errorFullName">Please enter your full name</span>
+        </div>
+
+        <!-- USN -->
+        <div class="form-group">
+            <label for="usn">USN (University Serial Number):</label>
+            <input type="text" id="usn">
+            <span class="error-message" id="errorUsn">Please enter your USN</span>
+        </div>
+
+        <!-- DOB -->
+        <div class="form-group">
+            <label for="dateOfBirth">Date of Birth:</label>
+            <input type="date" id="dateOfBirth">
+            <span class="error-message" id="errorDateOfBirth">Please select your date of birth</span>
+        </div>
+
+        <!-- GENDER -->
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender">
+                <option value="">-- Select Gender --</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+            <span class="error-message" id="errorGender">Please select gender</span>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+            <span class="error-message" id="errorEmail">Please enter a valid email</span>
+        </div>
+
+        <!-- PHONE -->
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone">
+            <span class="error-message" id="errorPhone">Please enter phone number</span>
+        </div>
+
+        <!-- ADDRESS -->
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address">
+            <span class="error-message" id="errorAddress">Please enter your address</span>
+        </div>
+
+        <!-- CITY -->
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city">
+            <span class="error-message" id="errorCity">Please enter your city</span>
+        </div>
+
+        <!-- STATE -->
+        <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" id="state">
+            <span class="error-message" id="errorState">Please enter your state</span>
+        </div>
+
+        <!-- ZIP -->
+        <div class="form-group">
+            <label for="zipCode">ZIP Code:</label>
+            <input type="text" id="zipCode">
+            <span class="error-message" id="errorZipCode">Please enter ZIP code</span>
+        </div>
+
+        <!-- COURSE -->
+        <div class="form-group">
+            <label for="course">Preferred Course:</label>
+            <select id="course">
+                <option value="">-- Select Course --</option>
+                <option>BCA</option>
+                <option>BBA</option>
+                <option>B.Tech</option>
+                <option>MCA</option>
+                <option>MBA</option>
+            </select>
+            <span class="error-message" id="errorCourse">Please select a course</span>
+        </div>
+
+        <!-- PREVIOUS EDUCATION -->
+        <div class="form-group">
+            <label for="previousEducation">Previous Education:</label>
+            <select id="previousEducation">
+                <option value="">-- Select Level --</option>
+                <option>PUC</option>
+                <option>Diploma</option>
+                <option>Graduate</option>
+            </select>
+            <span class="error-message" id="errorPreviousEducation">Please select education level</span>
+        </div>
+
+        <button type="submit">Register</button>
+
+    </form>
+
+    <div id="output" class="output-container" style="display:none;"></div>
+
+</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const fields = [
+            "fullName", "usn", "dateOfBirth", "gender", "email",
+            "phone", "address", "city", "state", "zipCode",
+            "course", "previousEducation"
+        ];
+
+        let valid = true;
+
+        fields.forEach(field => {
+            const el = document.getElementById(field);
+            const err = document.getElementById("error" + field.charAt(0).toUpperCase() + field.slice(1));
+
+            if (el.value.trim() === "") {
+                err.style.display = "block";
+                valid = false;
+            } else {
+                err.style.display = "none";
+            }
+        });
+
+        if (!valid) return;
+
+        const outputDiv = document.getElementById('output');
+        outputDiv.style.display = 'block';
+
+        outputDiv.innerHTML = `
+            <h2>Registration Submitted</h2>
+            <p><strong>Name:</strong> ${document.getElementById("fullName").value}</p>
+            <p><strong>USN:</strong> ${document.getElementById("usn").value}</p>
+            <p><strong>DOB:</strong> ${document.getElementById("dateOfBirth").value}</p>
+            <p><strong>Gender:</strong> ${document.getElementById("gender").value}</p>
+            <p><strong>Email:</strong> ${document.getElementById("email").value}</p>
+            <p><strong>Phone:</strong> ${document.getElementById("phone").value}</p>
+            <p><strong>Address:</strong> ${document.getElementById("address").value}</p>
+            <p><strong>City:</strong> ${document.getElementById("city").value}</p>
+            <p><strong>State:</strong> ${document.getElementById("state").value}</p>
+            <p><strong>ZIP Code:</strong> ${document.getElementById("zipCode").value}</p>
+            <p><strong>Course:</strong> ${document.getElementById("course").value}</p>
+            <p><strong>Previous Education:</strong> ${document.getElementById("previousEducation").value}</p>
+        `;
+    });
+</script>
+
+</body>
+</html>
