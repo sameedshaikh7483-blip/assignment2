@@ -43,13 +43,25 @@
         }
 
         button {
-            background-color: #4CAF50;
-            color: white;
             cursor: pointer;
         }
 
-        button:hover {
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .submit-btn:hover {
             background-color: #45a049;
+        }
+
+        .reset-btn {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background-color: #c9302c;
         }
 
         .error-message {
@@ -64,6 +76,11 @@
             border: 1px solid #4CAF50;
             background-color: #f9fff9;
             border-radius: 5px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
@@ -174,7 +191,11 @@
             <span class="error-message" id="errorPreviousEducation">Please select education level</span>
         </div>
 
-        <button type="submit">Register</button>
+        <!-- BUTTONS -->
+        <div class="button-row">
+            <button class="submit-btn" type="submit">Register</button>
+            <button class="reset-btn" type="button" id="resetBtn">Reset</button>
+        </div>
 
     </form>
 
@@ -183,14 +204,15 @@
 </div>
 
 <script>
+    const fields = [
+        "fullName", "usn", "dateOfBirth", "gender", "email",
+        "phone", "address", "city", "state", "zipCode",
+        "course", "previousEducation"
+    ];
+
+    // Submit / Validate
     document.getElementById('registrationForm').addEventListener('submit', function(e) {
         e.preventDefault();
-
-        const fields = [
-            "fullName", "usn", "dateOfBirth", "gender", "email",
-            "phone", "address", "city", "state", "zipCode",
-            "course", "previousEducation"
-        ];
 
         let valid = true;
 
@@ -226,6 +248,24 @@
             <p><strong>Course:</strong> ${document.getElementById("course").value}</p>
             <p><strong>Previous Education:</strong> ${document.getElementById("previousEducation").value}</p>
         `;
+    });
+
+    // RESET BUTTON
+    document.getElementById("resetBtn").addEventListener("click", function () {
+        // Clear all values
+        fields.forEach(field => {
+            document.getElementById(field).value = "";
+        });
+
+        // Hide errors
+        fields.forEach(field => {
+            const err = document.getElementById("error" + field.charAt(0).toUpperCase() + field.slice(1));
+            err.style.display = "none";
+        });
+
+        // Hide output
+        document.getElementById("output").style.display = "none";
+        document.getElementById("output").innerHTML = "";
     });
 </script>
 
